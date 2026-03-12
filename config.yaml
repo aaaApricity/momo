@@ -1,5 +1,5 @@
 # 二值化阈值
-threshold: 150.0
+threshold: 180
 # 灯条角度误差最大值（度）
 max_angle_error: 45.0
 # 灯条长宽比最小值/最大值
