@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/tools/img_tools.cpp.o.d"
   "CMakeFiles/main.dir/tools/logger.cpp.o"
   "CMakeFiles/main.dir/tools/logger.cpp.o.d"
+  "CMakeFiles/main.dir/yolov5.cpp.o"
+  "CMakeFiles/main.dir/yolov5.cpp.o.d"
   "main"
   "main.pdb"
 )

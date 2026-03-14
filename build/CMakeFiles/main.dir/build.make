@@ -83,24 +83,52 @@ CMakeFiles/main.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/main.cpp -o CMakeFiles/main.dir/main.cpp.s
 
-CMakeFiles/main.dir/tasks/detector.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/tasks/detector.cpp.o: ../tasks/detector.cpp
-CMakeFiles/main.dir/tasks/detector.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/tasks/detector.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tasks/detector.cpp.o -MF CMakeFiles/main.dir/tasks/detector.cpp.o.d -o CMakeFiles/main.dir/tasks/detector.cpp.o -c /home/a/Desktop/try/tasks/detector.cpp
+CMakeFiles/main.dir/yolov5.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/yolov5.cpp.o: ../yolov5.cpp
+CMakeFiles/main.dir/yolov5.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/yolov5.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/yolov5.cpp.o -MF CMakeFiles/main.dir/yolov5.cpp.o.d -o CMakeFiles/main.dir/yolov5.cpp.o -c /home/a/Desktop/try/yolov5.cpp
 
-CMakeFiles/main.dir/tasks/detector.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/tasks/detector.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/tasks/detector.cpp > CMakeFiles/main.dir/tasks/detector.cpp.i
+CMakeFiles/main.dir/yolov5.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/yolov5.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/yolov5.cpp > CMakeFiles/main.dir/yolov5.cpp.i
 
-CMakeFiles/main.dir/tasks/detector.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tasks/detector.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tasks/detector.cpp -o CMakeFiles/main.dir/tasks/detector.cpp.s
+CMakeFiles/main.dir/yolov5.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/yolov5.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/yolov5.cpp -o CMakeFiles/main.dir/yolov5.cpp.s
+
+CMakeFiles/main.dir/tools/img_tools.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/tools/img_tools.cpp.o: ../tools/img_tools.cpp
+CMakeFiles/main.dir/tools/img_tools.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/tools/img_tools.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tools/img_tools.cpp.o -MF CMakeFiles/main.dir/tools/img_tools.cpp.o.d -o CMakeFiles/main.dir/tools/img_tools.cpp.o -c /home/a/Desktop/try/tools/img_tools.cpp
+
+CMakeFiles/main.dir/tools/img_tools.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/tools/img_tools.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/tools/img_tools.cpp > CMakeFiles/main.dir/tools/img_tools.cpp.i
+
+CMakeFiles/main.dir/tools/img_tools.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tools/img_tools.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tools/img_tools.cpp -o CMakeFiles/main.dir/tools/img_tools.cpp.s
+
+CMakeFiles/main.dir/tools/logger.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/tools/logger.cpp.o: ../tools/logger.cpp
+CMakeFiles/main.dir/tools/logger.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/tools/logger.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tools/logger.cpp.o -MF CMakeFiles/main.dir/tools/logger.cpp.o.d -o CMakeFiles/main.dir/tools/logger.cpp.o -c /home/a/Desktop/try/tools/logger.cpp
+
+CMakeFiles/main.dir/tools/logger.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/tools/logger.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/tools/logger.cpp > CMakeFiles/main.dir/tools/logger.cpp.i
+
+CMakeFiles/main.dir/tools/logger.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tools/logger.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tools/logger.cpp -o CMakeFiles/main.dir/tools/logger.cpp.s
 
 CMakeFiles/main.dir/tasks/armor.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/tasks/armor.cpp.o: ../tasks/armor.cpp
 CMakeFiles/main.dir/tasks/armor.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/tasks/armor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/tasks/armor.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tasks/armor.cpp.o -MF CMakeFiles/main.dir/tasks/armor.cpp.o.d -o CMakeFiles/main.dir/tasks/armor.cpp.o -c /home/a/Desktop/try/tasks/armor.cpp
 
 CMakeFiles/main.dir/tasks/armor.cpp.i: cmake_force
@@ -114,7 +142,7 @@ CMakeFiles/main.dir/tasks/armor.cpp.s: cmake_force
 CMakeFiles/main.dir/tasks/classifier.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/tasks/classifier.cpp.o: ../tasks/classifier.cpp
 CMakeFiles/main.dir/tasks/classifier.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/tasks/classifier.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/tasks/classifier.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tasks/classifier.cpp.o -MF CMakeFiles/main.dir/tasks/classifier.cpp.o.d -o CMakeFiles/main.dir/tasks/classifier.cpp.o -c /home/a/Desktop/try/tasks/classifier.cpp
 
 CMakeFiles/main.dir/tasks/classifier.cpp.i: cmake_force
@@ -125,52 +153,40 @@ CMakeFiles/main.dir/tasks/classifier.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tasks/classifier.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tasks/classifier.cpp -o CMakeFiles/main.dir/tasks/classifier.cpp.s
 
-CMakeFiles/main.dir/tools/logger.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/tools/logger.cpp.o: ../tools/logger.cpp
-CMakeFiles/main.dir/tools/logger.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/tools/logger.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tools/logger.cpp.o -MF CMakeFiles/main.dir/tools/logger.cpp.o.d -o CMakeFiles/main.dir/tools/logger.cpp.o -c /home/a/Desktop/try/tools/logger.cpp
+CMakeFiles/main.dir/tasks/detector.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/tasks/detector.cpp.o: ../tasks/detector.cpp
+CMakeFiles/main.dir/tasks/detector.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/tasks/detector.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tasks/detector.cpp.o -MF CMakeFiles/main.dir/tasks/detector.cpp.o.d -o CMakeFiles/main.dir/tasks/detector.cpp.o -c /home/a/Desktop/try/tasks/detector.cpp
 
-CMakeFiles/main.dir/tools/logger.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/tools/logger.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/tools/logger.cpp > CMakeFiles/main.dir/tools/logger.cpp.i
+CMakeFiles/main.dir/tasks/detector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/tasks/detector.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/tasks/detector.cpp > CMakeFiles/main.dir/tasks/detector.cpp.i
 
-CMakeFiles/main.dir/tools/logger.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tools/logger.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tools/logger.cpp -o CMakeFiles/main.dir/tools/logger.cpp.s
-
-CMakeFiles/main.dir/tools/img_tools.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/tools/img_tools.cpp.o: ../tools/img_tools.cpp
-CMakeFiles/main.dir/tools/img_tools.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/tools/img_tools.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/tools/img_tools.cpp.o -MF CMakeFiles/main.dir/tools/img_tools.cpp.o.d -o CMakeFiles/main.dir/tools/img_tools.cpp.o -c /home/a/Desktop/try/tools/img_tools.cpp
-
-CMakeFiles/main.dir/tools/img_tools.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/tools/img_tools.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/a/Desktop/try/tools/img_tools.cpp > CMakeFiles/main.dir/tools/img_tools.cpp.i
-
-CMakeFiles/main.dir/tools/img_tools.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tools/img_tools.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tools/img_tools.cpp -o CMakeFiles/main.dir/tools/img_tools.cpp.s
+CMakeFiles/main.dir/tasks/detector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/tasks/detector.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/a/Desktop/try/tasks/detector.cpp -o CMakeFiles/main.dir/tasks/detector.cpp.s
 
 # Object files for target main
 main_OBJECTS = \
 "CMakeFiles/main.dir/main.cpp.o" \
-"CMakeFiles/main.dir/tasks/detector.cpp.o" \
+"CMakeFiles/main.dir/yolov5.cpp.o" \
+"CMakeFiles/main.dir/tools/img_tools.cpp.o" \
+"CMakeFiles/main.dir/tools/logger.cpp.o" \
 "CMakeFiles/main.dir/tasks/armor.cpp.o" \
 "CMakeFiles/main.dir/tasks/classifier.cpp.o" \
-"CMakeFiles/main.dir/tools/logger.cpp.o" \
-"CMakeFiles/main.dir/tools/img_tools.cpp.o"
+"CMakeFiles/main.dir/tasks/detector.cpp.o"
 
 # External object files for target main
 main_EXTERNAL_OBJECTS =
 
 main: CMakeFiles/main.dir/main.cpp.o
-main: CMakeFiles/main.dir/tasks/detector.cpp.o
+main: CMakeFiles/main.dir/yolov5.cpp.o
+main: CMakeFiles/main.dir/tools/img_tools.cpp.o
+main: CMakeFiles/main.dir/tools/logger.cpp.o
 main: CMakeFiles/main.dir/tasks/armor.cpp.o
 main: CMakeFiles/main.dir/tasks/classifier.cpp.o
-main: CMakeFiles/main.dir/tools/logger.cpp.o
-main: CMakeFiles/main.dir/tools/img_tools.cpp.o
+main: CMakeFiles/main.dir/tasks/detector.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_alphamat.so.4.5.4d
@@ -207,6 +223,7 @@ main: /usr/lib/x86_64-linux-gnu/libopencv_viz.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_wechat_qrcode.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_xobjdetect.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_xphoto.so.4.5.4d
+main: /usr/lib/x86_64-linux-gnu/libfmt.so.8.1.1
 main: /usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.7.0
 main: /usr/lib/x86_64-linux-gnu/libopencv_highgui.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_datasets.so.4.5.4d
@@ -228,7 +245,7 @@ main: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 main: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/a/Desktop/try/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

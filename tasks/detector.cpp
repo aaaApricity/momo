@@ -1,12 +1,12 @@
-#include <numeric>
 #include "detector.hpp"
 
+#include <fmt/chrono.h>
 #include <yaml-cpp/yaml.h>
-
+#include <numeric>  // 解决std::accumulate
+#include <string>   // 解决std::string不完整
+#include <locale>   // 解决locale相关错误
 #include <filesystem>
-#include <cstdio>   // 用于 sprintf
-#include <chrono>   // 用于时间格式化
-
+#include <numeric> 
 #include "tools/img_tools.hpp"
 #include "tools/logger.hpp"
 
@@ -41,7 +41,7 @@ std::list<Armor> Detector::detect(const cv::Mat & bgr_img, int frame_count)
   // 进行二值化
   cv::Mat binary_img;
   cv::threshold(gray_img, binary_img, threshold_, 255, cv::THRESH_BINARY);
-  if (debug_) cv::imshow("binary_img", binary_img);
+  cv::imshow("binary_img", binary_img);
 
   // 获取轮廓点
   std::vector<std::vector<cv::Point>> contours;
@@ -94,7 +94,7 @@ std::list<Armor> Detector::detect(const cv::Mat & bgr_img, int frame_count)
         continue;
       }
 
-      // 装甲板重叠，保留 roi 小的
+      // 装甲板重叠, 保留roi小的
       if (armor1->left.id == armor2->left.id || armor1->right.id == armor2->right.id) {
         auto area1 = armor1->pattern.cols * armor1->pattern.rows;
         auto area2 = armor2->pattern.cols * armor2->pattern.rows;
@@ -145,7 +145,7 @@ bool Detector::detect(Armor & armor, const cv::Mat & bgr_img)
   std::vector<cv::Point> points = {tl2, tr2, br2, bl2};
   auto armor_rotaterect = cv::minAreaRect(points);
   cv::Rect boundingBox = armor_rotaterect.boundingRect();
-  // 检查 boundingBox 是否超出图像边界
+  // 检查boundingBox是否超出图像边界
   if (
     boundingBox.x < 0 || boundingBox.y < 0 || boundingBox.x + boundingBox.width > bgr_img.cols ||
     boundingBox.y + boundingBox.height > bgr_img.rows) {
@@ -178,7 +178,7 @@ bool Detector::detect(Armor & armor, const cv::Mat & bgr_img)
     if (!check_geometry(lightbar)) continue;
 
     lightbar.color = get_color(bgr_img, contour);
-    // lightbar_points_corrector(lightbar, gray_img); //关闭 PCA
+    // lightbar_points_corrector(lightbar, gray_img); //关闭PCA
     lightbars.emplace_back(lightbar);
     lightbar_id += 1;
   }
@@ -221,7 +221,7 @@ bool Detector::detect(Armor & armor, const cv::Mat & bgr_img)
   if (
     closest_left_lightbar && closest_right_lightbar &&
     min_distance_br_tr + min_distance_tl_bl < 15) {
-    // 将四个点从 armor_roi 坐标系转换到原始图像坐标系
+    // 将四个点从armor_roi坐标系转换到原始图像坐标系
     armor.points[0] = closest_left_lightbar->top + cv::Point2f(boundingBox.x, boundingBox.y);
     armor.points[1] = closest_right_lightbar->top + cv::Point2f(boundingBox.x, boundingBox.y);
     armor.points[2] = closest_right_lightbar->bottom + cv::Point2f(boundingBox.x, boundingBox.y);
@@ -256,7 +256,7 @@ bool Detector::check_name(const Armor & armor) const
   // 保存不确定的图案，用于分类器的迭代
   if (name_ok && !confidence_ok) save(armor);
 
-  // 出现 5 号 则显示 debug 信息。但不过滤。
+  // 出现 5号 则显示 debug 信息。但不过滤。
   if (armor.name == ArmorName::five) tools::logger()->debug("See pattern 5");
 
   return name_ok && confidence_ok;
@@ -270,44 +270,24 @@ bool Detector::check_type(const Armor & armor) const
 
   // 保存异常的图案，用于分类器的迭代
   if (!name_ok) {
-    // 替换 fmt::format -> 字符串拼接
     tools::logger()->debug(
-      "see strange armor: " + ARMOR_TYPES[armor.type] + " " + ARMOR_NAMES[armor.name]);
+      "see strange armor: {} {}", ARMOR_TYPES[armor.type], ARMOR_NAMES[armor.name]);
     save(armor);
   }
 
   return name_ok;
 }
 
-Color Detector::get_color(const cv::Mat & bgr_img, const std::vector<cv::Point> & contour) const {
-    int red_sum = 0, blue_sum = 0, green_sum = 0;
-    int count = 0;
+Color Detector::get_color(const cv::Mat & bgr_img, const std::vector<cv::Point> & contour) const
+{
+  int red_sum = 0, blue_sum = 0;
 
-    for (const auto & point : contour) {
-        cv::Vec3b pixel = bgr_img.at<cv::Vec3b>(point);
-        blue_sum += pixel[0];
-        green_sum += pixel[1]; // 注意：BGR 格式，绿色在中间
-        red_sum += pixel[2];
-        count++;
-    }
+  for (const auto & point : contour) {
+    red_sum += bgr_img.at<cv::Vec3b>(point)[2];
+    blue_sum += bgr_img.at<cv::Vec3b>(point)[0];
+  }
 
-    // 计算平均值
-    float r = red_sum / count;
-    float g = green_sum / count;
-    float b = blue_sum / count;
-
-    // 【核心逻辑】判断颜色纯度
-    // 如果是白光，R≈G≈B。如果是蓝光，B >> R 且 B >> G。
-    
-    if (b > r * 1.5 && b > g * 1.5) { 
-        return Color::blue; 
-    }
-    if (r > b * 1.5 && r > g * 1.5) { 
-        return Color::red; 
-    }
-
-    // 如果都不满足，说明是白光/黄光（天花板灯），直接返回“非装甲板颜色”
-    return Color::none; // 你需要在 enum 里加一个 none，或者在调用处判断
+  return blue_sum > red_sum ? Color::blue : Color::red;
 }
 
 cv::Mat Detector::get_pattern(const cv::Mat & bgr_img, const Armor & armor) const
@@ -332,8 +312,8 @@ cv::Mat Detector::get_pattern(const cv::Mat & bgr_img, const Armor & armor) cons
 
 ArmorType Detector::get_type(const Armor & armor)
 {
-  /// 优先根据当前 armor.ratio 判断
-  /// TODO: 25 赛季是否还需要根据比例判断大小装甲？能否根据图案直接判断？
+  /// 优先根据当前armor.ratio判断
+  /// TODO: 25赛季是否还需要根据比例判断大小装甲？能否根据图案直接判断？
 
   if (armor.ratio > 3.0) {
     // tools::logger()->debug(
@@ -368,13 +348,8 @@ cv::Point2f Detector::get_center_norm(const cv::Mat & bgr_img, const cv::Point2f
 
 void Detector::save(const Armor & armor) const
 {
-  // 使用 C 风格时间格式化
-  auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-  char buffer[30];
-  std::strftime(buffer, sizeof(buffer), "%Y-%m-%d_%H-%M-%S", std::localtime(&now));
-  auto file_name = std::string(buffer);
-  
-  auto img_path = save_path_ + "/" + ARMOR_NAMES[armor.name] + "_" + file_name + ".jpg";
+  auto file_name = fmt::format("{:%Y-%m-%d_%H-%M-%S}", std::chrono::system_clock::now());
+  auto img_path = fmt::format("{}/{}_{}.jpg", save_path_, ARMOR_NAMES[armor.name], file_name);
   cv::imwrite(img_path, armor.pattern);
 }
 
@@ -383,75 +358,23 @@ void Detector::show_result(
   const std::list<Armor> & armors, int frame_count) const
 {
   auto detection = bgr_img.clone();
-  
-  // 替换 fmt::format -> std::to_string
-  tools::draw_text(detection, "[" + std::to_string(frame_count) + "]", cv::Point(10, 30), cv::Scalar(255, 255, 255));
+  tools::draw_text(detection, fmt::format("[{}]", frame_count), {10, 30}, {255, 255, 255});
 
   for (const auto & lightbar : lightbars) {
-    // 替换 fmt::format -> sprintf (用于浮点数格式化)
-    char info_buf[100];
-    sprintf(info_buf, "%.1f %.1f %.1f %d", 
-            lightbar.angle_error * 57.3, lightbar.ratio, lightbar.length, (int)lightbar.color);
-    std::string info(info_buf);
-    
-    tools::draw_text(detection, info, lightbar.top, cv::Scalar(0, 255, 255));
-    tools::draw_points(detection, lightbar.points, cv::Scalar(0, 255, 255), 3);
+    auto info = fmt::format(
+      "{:.1f} {:.1f} {:.1f} {}", lightbar.angle_error * 57.3, lightbar.ratio, lightbar.length,
+      COLORS[lightbar.color]);
+    tools::draw_text(detection, info, lightbar.top, {0, 255, 255});
+    tools::draw_points(detection, lightbar.points, {0, 255, 255}, 3);
   }
 
-    for (const auto & armor : armors) {
-    // --- 1. 准备格式化文字 ---
-    char info_buf[150];
-    sprintf(info_buf, "%s (%.2f)", 
-            ARMOR_NAMES[armor.name].c_str(), armor.confidence);
-    std::string info(info_buf);
-
-    // --- 2. 提取四个角点 (左上，右上，右下，左下) ---
-    // 注意：armor.points 的顺序通常是 0:TL, 1:TR, 2:BR, 3:BL
-    std::vector<cv::Point> pts = {
-        armor.points[0], 
-        armor.points[1], 
-        armor.points[2], 
-        armor.points[3]
-    };
-
-    // --- 3. 画闭合的绿色大框 (核心修改！) ---
-    // true 表示闭合多边形，线宽为 2
-    cv::polylines(detection, pts, true, cv::Scalar(0, 255, 0), 2);
-
-    // --- 4. (可选) 填充半透明绿色，让框更醒目 ---
-    // 创建蒙版
-    std::vector<std::vector<cv::Point>> poly = {pts};
-    cv::Mat mask = cv::Mat::zeros(detection.size(), CV_8UC1);
-    cv::fillPoly(mask, poly, cv::Scalar(255));
-    
-    // 融合颜色 (alpha=0.2，轻微绿色填充)
-    cv::Scalar color = cv::Scalar(0, 255, 0);
-    for (int y = 0; y < detection.rows; ++y) {
-        for (int x = 0; x < detection.cols; ++x) {
-            if (mask.at<uchar>(y, x)) {
-                cv::Vec3b &pixel = detection.at<cv::Vec3b>(y, x);
-                pixel[0] = pixel[0] * 0.8 + color[0] * 0.2; // B
-                pixel[1] = pixel[1] * 0.8 + color[1] * 0.2; // G
-                pixel[2] = pixel[2] * 0.8 + color[2] * 0.2; // R
-            }
-        }
-    }
-    // 注意：上面的像素级循环比较慢，如果卡顿，可以注释掉填充部分，只保留 polylines
-
-    // --- 5. 在框的上方写文字 ---
-    // 计算文字位置：取左上和右上的中点，再往上移 10 像素
-    cv::Point text_pos = (armor.points[0] + armor.points[1]) / 2;
-    text_pos.y -= 10;
-
-    // 画黑色背景底框
-    int baseline = 0;
-    cv::Size textSize = cv::getTextSize(info, cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
-    cv::Point tl_bg = cv::Point(text_pos.x - textSize.width/2 - 2, text_pos.y - textSize.height - 2);
-    cv::Point br_bg = cv::Point(text_pos.x + textSize.width/2 + 2, text_pos.y + baseline + 2);
-    cv::rectangle(detection, tl_bg, br_bg, cv::Scalar(0, 0, 0), -1); // 黑色填充
-
-    // 画白色文字
-    cv::putText(detection, info, text_pos, cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(255, 255, 255), 2);
+  for (const auto & armor : armors) {
+    auto info = fmt::format(
+      "{:.2f} {:.2f} {:.1f} {:.2f} {} {}", armor.ratio, armor.side_ratio,
+      armor.rectangular_error * 57.3, armor.confidence, ARMOR_NAMES[armor.name],
+      ARMOR_TYPES[armor.type]);
+    tools::draw_points(detection, armor.points, {0, 255, 0});
+    tools::draw_text(detection, info, armor.left.bottom, {0, 255, 0});
   }
 
   cv::Mat binary_img2;
@@ -459,21 +382,18 @@ void Detector::show_result(
   cv::resize(detection, detection, {}, 0.5, 0.5);     // 显示时缩小图片尺寸
 
   // cv::imshow("threshold", binary_img2);
-  if (debug_) {
-      cv::imshow("detection", detection);
-      cv::waitKey(1);
-  }
+  cv::imshow("detection", detection);
 }
 
 void Detector::lightbar_points_corrector(Lightbar & lightbar, const cv::Mat & gray_img) const
 {
   // 配置参数
   constexpr float MAX_BRIGHTNESS = 25;  // 归一化最大亮度值
-  constexpr float ROI_SCALE = 0.07;     // ROI 扩展比例
-  constexpr float SEARCH_START = 0.4;   // 搜索起始位置比例（原 0.8/2）
-  constexpr float SEARCH_END = 0.6;     // 搜索结束位置比例（原 1.2/2）
+  constexpr float ROI_SCALE = 0.07;     // ROI扩展比例
+  constexpr float SEARCH_START = 0.4;   // 搜索起始位置比例（原0.8/2）
+  constexpr float SEARCH_END = 0.6;     // 搜索结束位置比例（原1.2/2）
 
-  // 扩展并裁剪 ROI
+  // 扩展并裁剪ROI
   cv::Rect roi_box = lightbar.rotated_rect.boundingRect();
   roi_box.x -= roi_box.width * ROI_SCALE;
   roi_box.y -= roi_box.height * ROI_SCALE;
@@ -483,7 +403,7 @@ void Detector::lightbar_points_corrector(Lightbar & lightbar, const cv::Mat & gr
   // 边界约束
   roi_box &= cv::Rect(0, 0, gray_img.cols, gray_img.rows);
 
-  // 归一化 ROI
+  // 归一化ROI
   cv::Mat roi = gray_img(roi_box);
   const float mean_val = cv::mean(roi)[0];
   roi.convertTo(roi, CV_32F);
@@ -500,14 +420,12 @@ void Detector::lightbar_points_corrector(Lightbar & lightbar, const cv::Mat & gr
     for (int j = 0; j < roi.cols; ++j) {
       const float weight = roi.at<float>(i, j);
       if (weight > 1e-3) {          // 忽略极小值提升性能
-        points.emplace_back(j, i);  // 坐标相对于 ROI 区域
+        points.emplace_back(j, i);  // 坐标相对于ROI区域
       }
     }
   }
 
-  // PCA 计算对称轴方向
-  if (points.empty()) return; // 防止空点云导致 PCA 崩溃
-  
+  // PCA计算对称轴方向
   cv::PCA pca(cv::Mat(points).reshape(1), cv::Mat(), cv::PCA::DATA_AS_ROW);
   cv::Point2f axis(pca.eigenvectors.at<float>(0, 0), pca.eigenvectors.at<float>(0, 1));
   axis /= cv::norm(axis);
