@@ -8,11 +8,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall -fpermissive -std=c++17")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=1")  # 解决ABI兼容问题
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lpthread -ldl -lm")
 
-# ========== 新增：ROS2 Humble依赖（只查找一次，避免重复） ==========
-find_package(rclcpp REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(std_msgs REQUIRED)
-
 # ========== 1. OpenVINO配置 ==========
 set(OPENVINO_ROOT "/home/a/Desktop/SuperPower/l_openvino_toolkit_ubuntu20_2023.3.0.13775.ceeafaf64f3_x86_64")
 set(OPENVINO_INC "${OPENVINO_ROOT}/runtime/include")
@@ -89,7 +84,7 @@ foreach(FILE IN LISTS CORE_SOURCES)
     endif()
 endforeach()
 
-# ========== 5. 头文件包含（新增ROS2头文件） ==========
+# ========== 5. 头文件包含 ==========
 include_directories(
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/tasks
@@ -97,12 +92,9 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/tools
     ${OpenCV_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}
-    ${rclcpp_INCLUDE_DIRS}          # 新增
-    ${geometry_msgs_INCLUDE_DIRS}   # 新增
-    ${std_msgs_INCLUDE_DIRS}        # 新增
 )
 
-# ========== 6. 生成可执行文件 & 链接库（新增ROS2库） ==========
+# ========== 6. 生成可执行文件 & 链接库 ==========
 add_executable(main ${CORE_SOURCES})
 
 target_link_libraries(
@@ -114,23 +106,6 @@ target_link_libraries(
     Eigen3::Eigen
     openvino
     openvino_intel_cpu_plugin
-    rclcpp::rclcpp                  # 新增
-    ${geometry_msgs_LIBRARIES}      # 新增
-    ${std_msgs_LIBRARIES}           # 新增
 )
 
 message(STATUS "✅ CMake配置完成 → 可执行文件：${CMAKE_BINARY_DIR}/main")
-
-# ========== 修复：只编译一次ros2_test（删除重复指令） ==========
-# 确保ros2_test.cpp路径正确（src/ros2_test.cpp）
-set(ROS2_TEST_SRC "${PROJECT_SOURCE_DIR}/src/ros2_test.cpp")
-if(EXISTS ${ROS2_TEST_SRC})
-    add_executable(ros2_test ${ROS2_TEST_SRC})
-    target_link_libraries(ros2_test
-        rclcpp::rclcpp
-        ${std_msgs_LIBRARIES}
-    )
-    message(STATUS "✅ 已配置ros2_test编译 → 源文件：${ROS2_TEST_SRC}")
-else()
-    message(WARNING "⚠️ ros2_test.cpp缺失 → ${ROS2_TEST_SRC}，跳过编译")
-endif()

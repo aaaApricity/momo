@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = /home/a/Desktop/try/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -127,32 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named uninstall
-
-# Build rule for target.
-uninstall: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 uninstall
-.PHONY : uninstall
-
-# fast build rule for target.
-uninstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
-.PHONY : uninstall/fast
-
-#=============================================================================
-# Target rules for targets named auto_aim_uninstall
-
-# Build rule for target.
-auto_aim_uninstall: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 auto_aim_uninstall
-.PHONY : auto_aim_uninstall
-
-# fast build rule for target.
-auto_aim_uninstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/auto_aim_uninstall.dir/build.make CMakeFiles/auto_aim_uninstall.dir/build
-.PHONY : auto_aim_uninstall/fast
-
-#=============================================================================
 # Target rules for targets named main
 
 # Build rule for target.
@@ -164,19 +128,6 @@ main: cmake_check_build_system
 main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
-
-#=============================================================================
-# Target rules for targets named ros2_test
-
-# Build rule for target.
-ros2_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ros2_test
-.PHONY : ros2_test
-
-# fast build rule for target.
-ros2_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/build
-.PHONY : ros2_test/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -201,30 +152,6 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-src/ros2_test.o: src/ros2_test.cpp.o
-.PHONY : src/ros2_test.o
-
-# target to build an object file
-src/ros2_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/src/ros2_test.cpp.o
-.PHONY : src/ros2_test.cpp.o
-
-src/ros2_test.i: src/ros2_test.cpp.i
-.PHONY : src/ros2_test.i
-
-# target to preprocess a source file
-src/ros2_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/src/ros2_test.cpp.i
-.PHONY : src/ros2_test.cpp.i
-
-src/ros2_test.s: src/ros2_test.cpp.s
-.PHONY : src/ros2_test.s
-
-# target to generate assembly for a file
-src/ros2_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/src/ros2_test.cpp.s
-.PHONY : src/ros2_test.cpp.s
 
 tasks/armor.o: tasks/armor.cpp.o
 .PHONY : tasks/armor.o
@@ -426,17 +353,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... auto_aim_uninstall"
-	@echo "... uninstall"
 	@echo "... main"
-	@echo "... ros2_test"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... src/ros2_test.o"
-	@echo "... src/ros2_test.i"
-	@echo "... src/ros2_test.s"
 	@echo "... tasks/armor.o"
 	@echo "... tasks/armor.i"
 	@echo "... tasks/armor.s"

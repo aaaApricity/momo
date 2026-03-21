@@ -6,11 +6,6 @@
 #include <sstream>
 #include <Eigen/Dense>
 
-// ========== 使用ROS2标准基础类型（无Stamped） ==========
-#include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/point.hpp"  // 替换PointStamped
-#include "std_msgs/msg/float64.hpp"     // 替换Float64Stamped
-
 #include "solver.hpp"
 #include "yolov5.hpp"
 #include "tasks/classifier.hpp"
@@ -110,16 +105,6 @@ void drawLikeDetector(cv::Mat& frame, const std::list<auto_aim::Armor>& armors)
 
 int main(int argc, char** argv)
 {
-    // ========== 初始化ROS2节点 ==========
-    rclcpp::init(argc, argv);
-    auto ros_node = rclcpp::Node::make_shared("armor_data_publisher");
-    
-    // 创建ROS2发布者（使用标准基础类型）
-    auto pub_xyz = ros_node->create_publisher<geometry_msgs::msg::Point>("/armor/xyz", 10);
-    auto pub_yaw = ros_node->create_publisher<std_msgs::msg::Float64>("/armor/yaw", 10);
-    auto pub_distance = ros_node->create_publisher<std_msgs::msg::Float64>("/armor/distance", 10);
-
-    // ========== 原有代码 ==========
     const std::string CONFIG_PATH = "/home/a/Desktop/try/config.yaml";
     const std::string VIDEO_PATH = "/home/a/Desktop/try/demo/demo.avi";
 
@@ -158,61 +143,32 @@ int main(int argc, char** argv)
     int frame_count = 0;
     bool is_paused = false;
 
-    while (rclcpp::ok())
+    while (true)
     {
         if (!is_paused)
         {
             tm.reset();
             tm.start();
 
-            // 修复：空帧时重试3次，仍失败则退出循环
-            int retry = 0;
-            while (!cap.read(frame) && retry < 3)
-            {
-                cap.set(cv::CAP_PROP_POS_FRAMES, 0); // 重置到第一帧
-                retry++;
-                std::cout << "[WARN] 视频帧读取失败，重试第" << retry << "次..." << std::endl;
-            }
-            if (retry >= 3)
-            {
-                std::cerr << "[ERROR] 视频文件损坏，无法读取帧！" << std::endl;
-                break; // 退出循环，避免空帧死循环
-            }
-
+            if (!cap.read(frame)) break;
             frame_count++;
+
             auto armors = yolo_detector.detect(frame, frame_count);
 
-            // PnP解算 + ROS2发布
+            // ===================== 正确位置：PnP循环内修正坐标系 =====================
             for (auto& armor : armors)
             {
                 pnp_solver.solve(armor);
 
-                // 坐标系修正
+                // 坐标系修正（核心！解决方向反的问题）
                 armor.xyz_in_gimbal.x() = -armor.xyz_in_gimbal.x();
                 armor.xyz_in_gimbal.y() = -armor.xyz_in_gimbal.y();
-                armor.xyz_in_gimbal.z() =  armor.xyz_in_gimbal.z();
+                armor.xyz_in_gimbal.z() =  armor.xyz_in_gimbal.z(); // Z先不动
 
-                armor.ypr_in_gimbal[0] = -armor.ypr_in_gimbal[0];
-                armor.ypr_in_gimbal[1] = -armor.ypr_in_gimbal[1];
-
-                // ========== 发布ROS2数据（无Stamped） ==========
-                // 1. 发布XYZ坐标
-                geometry_msgs::msg::Point xyz_msg;
-                xyz_msg.x = armor.xyz_in_gimbal.x();
-                xyz_msg.y = armor.xyz_in_gimbal.y();
-                xyz_msg.z = armor.xyz_in_gimbal.z();
-                pub_xyz->publish(xyz_msg);
-
-                // 2. 发布Yaw角度
-                std_msgs::msg::Float64 yaw_msg;
-                yaw_msg.data = armor.ypr_in_gimbal[0] * 180 / CV_PI;
-                pub_yaw->publish(yaw_msg);
-
-                // 3. 发布距离
-                std_msgs::msg::Float64 dist_msg;
-                dist_msg.data = armor.xyz_in_gimbal.z();
-                pub_distance->publish(dist_msg);
+                armor.ypr_in_gimbal[0] = -armor.ypr_in_gimbal[0];  // yaw取反
+                armor.ypr_in_gimbal[1] = -armor.ypr_in_gimbal[1];  // pitch取反
             }
+            // ======================================================================
 
             drawLikeDetector(frame, armors);
 
@@ -237,14 +193,9 @@ int main(int argc, char** argv)
         int key = cv::waitKey(frame_delay_actual) & 0xFF;
         if (key == 27) break;
         else if (key == 'p' || key == 'P') is_paused = !is_paused;
-
-        // ROS2节点自旋
-        rclcpp::spin_some(ros_node);
     }
 
-    // 资源清理
     cap.release();
     cv::destroyAllWindows();
-    rclcpp::shutdown();
     return 0;
 }
