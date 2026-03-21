@@ -12,8 +12,10 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/a/Desktop/try/tasks/armor.cpp" "CMakeFiles/main.dir/tasks/armor.cpp.o" "gcc" "CMakeFiles/main.dir/tasks/armor.cpp.o.d"
   "/home/a/Desktop/try/tasks/classifier.cpp" "CMakeFiles/main.dir/tasks/classifier.cpp.o" "gcc" "CMakeFiles/main.dir/tasks/classifier.cpp.o.d"
   "/home/a/Desktop/try/tasks/detector.cpp" "CMakeFiles/main.dir/tasks/detector.cpp.o" "gcc" "CMakeFiles/main.dir/tasks/detector.cpp.o.d"
+  "/home/a/Desktop/try/tasks/solver.cpp" "CMakeFiles/main.dir/tasks/solver.cpp.o" "gcc" "CMakeFiles/main.dir/tasks/solver.cpp.o.d"
   "/home/a/Desktop/try/tools/img_tools.cpp" "CMakeFiles/main.dir/tools/img_tools.cpp.o" "gcc" "CMakeFiles/main.dir/tools/img_tools.cpp.o.d"
   "/home/a/Desktop/try/tools/logger.cpp" "CMakeFiles/main.dir/tools/logger.cpp.o" "gcc" "CMakeFiles/main.dir/tools/logger.cpp.o.d"
+  "/home/a/Desktop/try/tools/math_tools.cpp" "CMakeFiles/main.dir/tools/math_tools.cpp.o" "gcc" "CMakeFiles/main.dir/tools/math_tools.cpp.o.d"
   "/home/a/Desktop/try/yolov5.cpp" "CMakeFiles/main.dir/yolov5.cpp.o" "gcc" "CMakeFiles/main.dir/yolov5.cpp.o.d"
   )
 

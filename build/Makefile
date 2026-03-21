@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/a/Desktop/try/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -117,6 +127,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named uninstall
+
+# Build rule for target.
+uninstall: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 uninstall
+.PHONY : uninstall
+
+# fast build rule for target.
+uninstall/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
+.PHONY : uninstall/fast
+
+#=============================================================================
+# Target rules for targets named auto_aim_uninstall
+
+# Build rule for target.
+auto_aim_uninstall: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 auto_aim_uninstall
+.PHONY : auto_aim_uninstall
+
+# fast build rule for target.
+auto_aim_uninstall/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/auto_aim_uninstall.dir/build.make CMakeFiles/auto_aim_uninstall.dir/build
+.PHONY : auto_aim_uninstall/fast
+
+#=============================================================================
 # Target rules for targets named main
 
 # Build rule for target.
@@ -128,6 +164,19 @@ main: cmake_check_build_system
 main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
+
+#=============================================================================
+# Target rules for targets named ros2_test
+
+# Build rule for target.
+ros2_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ros2_test
+.PHONY : ros2_test
+
+# fast build rule for target.
+ros2_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/build
+.PHONY : ros2_test/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -152,6 +201,30 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+src/ros2_test.o: src/ros2_test.cpp.o
+.PHONY : src/ros2_test.o
+
+# target to build an object file
+src/ros2_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/src/ros2_test.cpp.o
+.PHONY : src/ros2_test.cpp.o
+
+src/ros2_test.i: src/ros2_test.cpp.i
+.PHONY : src/ros2_test.i
+
+# target to preprocess a source file
+src/ros2_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/src/ros2_test.cpp.i
+.PHONY : src/ros2_test.cpp.i
+
+src/ros2_test.s: src/ros2_test.cpp.s
+.PHONY : src/ros2_test.s
+
+# target to generate assembly for a file
+src/ros2_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ros2_test.dir/build.make CMakeFiles/ros2_test.dir/src/ros2_test.cpp.s
+.PHONY : src/ros2_test.cpp.s
 
 tasks/armor.o: tasks/armor.cpp.o
 .PHONY : tasks/armor.o
@@ -225,6 +298,30 @@ tasks/detector.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tasks/detector.cpp.s
 .PHONY : tasks/detector.cpp.s
 
+tasks/solver.o: tasks/solver.cpp.o
+.PHONY : tasks/solver.o
+
+# target to build an object file
+tasks/solver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tasks/solver.cpp.o
+.PHONY : tasks/solver.cpp.o
+
+tasks/solver.i: tasks/solver.cpp.i
+.PHONY : tasks/solver.i
+
+# target to preprocess a source file
+tasks/solver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tasks/solver.cpp.i
+.PHONY : tasks/solver.cpp.i
+
+tasks/solver.s: tasks/solver.cpp.s
+.PHONY : tasks/solver.s
+
+# target to generate assembly for a file
+tasks/solver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tasks/solver.cpp.s
+.PHONY : tasks/solver.cpp.s
+
 tools/img_tools.o: tools/img_tools.cpp.o
 .PHONY : tools/img_tools.o
 
@@ -273,6 +370,30 @@ tools/logger.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tools/logger.cpp.s
 .PHONY : tools/logger.cpp.s
 
+tools/math_tools.o: tools/math_tools.cpp.o
+.PHONY : tools/math_tools.o
+
+# target to build an object file
+tools/math_tools.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tools/math_tools.cpp.o
+.PHONY : tools/math_tools.cpp.o
+
+tools/math_tools.i: tools/math_tools.cpp.i
+.PHONY : tools/math_tools.i
+
+# target to preprocess a source file
+tools/math_tools.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tools/math_tools.cpp.i
+.PHONY : tools/math_tools.cpp.i
+
+tools/math_tools.s: tools/math_tools.cpp.s
+.PHONY : tools/math_tools.s
+
+# target to generate assembly for a file
+tools/math_tools.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/tools/math_tools.cpp.s
+.PHONY : tools/math_tools.cpp.s
+
 yolov5.o: yolov5.cpp.o
 .PHONY : yolov5.o
 
@@ -305,10 +426,17 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test"
+	@echo "... auto_aim_uninstall"
+	@echo "... uninstall"
 	@echo "... main"
+	@echo "... ros2_test"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/ros2_test.o"
+	@echo "... src/ros2_test.i"
+	@echo "... src/ros2_test.s"
 	@echo "... tasks/armor.o"
 	@echo "... tasks/armor.i"
 	@echo "... tasks/armor.s"
@@ -318,12 +446,18 @@ help:
 	@echo "... tasks/detector.o"
 	@echo "... tasks/detector.i"
 	@echo "... tasks/detector.s"
+	@echo "... tasks/solver.o"
+	@echo "... tasks/solver.i"
+	@echo "... tasks/solver.s"
 	@echo "... tools/img_tools.o"
 	@echo "... tools/img_tools.i"
 	@echo "... tools/img_tools.s"
 	@echo "... tools/logger.o"
 	@echo "... tools/logger.i"
 	@echo "... tools/logger.s"
+	@echo "... tools/math_tools.o"
+	@echo "... tools/math_tools.i"
+	@echo "... tools/math_tools.s"
 	@echo "... yolov5.o"
 	@echo "... yolov5.i"
 	@echo "... yolov5.s"
